@@ -1,0 +1,87 @@
+.custom-css {
+	margin-top: 30px;
+	color: #444;
+	font-size: 30px;
+	line-height: 50px;
+}
+
+.card {
+	background: transparent !important;
+}
+
+#time_quanta {
+	background-image: linear-gradient(to left, rgb(255, 241, 241), rgb(205, 229, 255));
+}
+
+.gantt-box {
+	position: relative;
+	border: 1px solid #000;
+	height: 5px;
+	padding: 30px;
+	text-align: center;
+}
+
+.gantt-box-left {
+	position: absolute;
+	left: 0;
+	margin-left: 3px;
+	bottom: 0;
+}
+
+.gantt-box-right {
+	position: absolute;
+	right: 0;
+	bottom: 0;
+	margin-right: 3px;
+} 
+
+#time_quanta {
+	width: auto;
+}
+
+#start_btn {
+	background-color: hsl(125, 100%, 37%);
+	transition: opacity 0.15s ease-in-out, color .15s ease-in-out, background-color .15s ease-in-out, border-color .15s ease-in-out, box-shadow .15s ease-in-out;
+	color: aliceblue;
+}
+
+#start_btn:hover {
+	opacity: 0.8;
+}
+
+#drop_btn {
+	background-color: hsl(124, 97%, 34%);
+	transition: opacity 0.15s ease-in-out, color .15s ease-in-out, background-color .15s ease-in-out, border-color .15s ease-in-out, box-shadow .15s ease-in-out;
+	color: aliceblue;
+}
+
+#drop_btn:hover {
+	opacity: 0.8;
+}
+
+#vis_btn {
+	background-color: hsl(273, 100%, 66%);
+	transition: opacity 0.15s ease-in-out, color .15s ease-in-out, background-color .15s ease-in-out, border-color .15s ease-in-out, box-shadow .15s ease-in-out;
+	color: aliceblue;
+}
+
+#vis_btn:hover {
+	opacity: 0.8;
+}
+
+
+.fitem {
+	display: flex;
+	border: 1px solid #ff0101;
+	width: 120px;
+	height: 120px;
+	margin: 5px;
+	justify-content: center;
+	align-items: center;
+}
+
+.flexible {
+	display: flex;
+	height: 100%;
+	width: 100%;
+}

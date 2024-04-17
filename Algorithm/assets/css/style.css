@@ -1,0 +1,130 @@
+body{
+    background-color:whitesmoke;
+    color:black;
+    margin: 0px;
+}
+
+
+#radio{
+    display: block;
+    font-size: large;
+    position: absolute;
+    left: 40vw;
+    width: 500px;
+}
+
+
+form{
+    font-size: large;
+}
+
+span{
+    position: absolute;
+    left:180px;
+}
+
+table{
+    font-size: large;  
+}
+
+#table th,#table td{
+    border-bottom: 2px black solid;
+}
+
+
+#mytb{
+    border-spacing: 0;
+}
+
+#mytb th{
+    border: 2px solid black;
+    padding:2px 8px;
+}
+
+#mytb td{
+    border: 2px solid black;
+    padding:2px 8px;
+}
+
+#average{
+    float: right;
+    margin: 0 2px;
+}
+
+#average input{
+    width:50px;
+    border: 1px solid black;
+}
+
+.chart-box{
+    width: 1000px;
+    margin: 0 auto;
+    padding: 50px;
+}
+
+.InputFiled{
+    border-radius: 10px;
+}
+
+.InputFolder{
+    margin-left: 32%;
+}
+
+#table{
+    background: lightblue;
+    border-radius: 10px;
+    -webkit-border-radius: 10px;
+    -moz-border-radius: 10px;
+    -ms-border-radius: 10px;
+    -o-border-radius: 10px;
+}
+.btnGang{
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    justify-items: center;
+}
+.visulizedChart{
+    display: flex;
+    justify-content: center;
+    justify-items: center;
+    background-color: lightblue;
+    height: 45px;
+    border-radius: 10px;
+    -webkit-border-radius: 10px;
+    -moz-border-radius: 10px;
+    -ms-border-radius: 10px;
+    -o-border-radius: 10px;
+}
+.visulizedChart p{
+    font-weight: 800;
+    font-size: 30px;
+}
+
+.MainPage{
+    display: flex;
+    flex-direction: column;
+    width: 80%;
+    margin-left: 10%;
+
+
+
+}
+
+#timequanta{
+    margin-left: 35%;
+}
+
+#myChart{
+    border-radius: 10px;
+    -webkit-border-radius: 10px;
+    -moz-border-radius: 10px;
+    -ms-border-radius: 10px;
+    -o-border-radius: 10px;
+}
+
+.end{
+    font-weight: 200px;
+    font-size: 20px;
+    color: red;
+}

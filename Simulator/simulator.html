@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <meta charset='utf-8'>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+
+  <title>CPU Scheduling Algorithm Simulator</title>
+ 
+  <!-- CSS -->
+  <link rel="stylesheet" href="css/styles.css">
+  <link rel="stylesheet" href="../style.css">
+
+  <!-- JavaScript -->
+  <script defer src="js/main.js"></script>
+  <script defer src="js/algorithm.js"></script>
+
+  <!-- fontawesome for icons -->
+  <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css"
+  integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous" />
+
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6" crossorigin="anonymous">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-JEW9xMcG8R+pH31jmWH6WWP0WintQrMb4s7ZOdauHnUtxwoG2vI5DkLtS3qm9Ekf" crossorigin="anonymous"></script>
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+</head>
+
+<body>
+
+  <!-- nav bar -->
+  <section class="sub-header">
+    <nav>
+        <a href="index.html">CPU Simulator</a>
+        <div class="nav-links" id="navLinks">
+            <i class="fas fa-window-close" onclick="hideMenu()"></i>
+            <ul>
+                <li><a href="../index.html">Home</a></li>
+                <li><a href="../docs.html">Docs</a></li>
+                <li><a href="/Simulator/simulator.html">Simulator</a></li>
+                <li><a href="../about.html">About</a></li>
+            </ul>
+        </div>
+        <i class="fas fa-bars" onclick="showMenu()"></i>
+    </nav>
+    <h1>Simulator</h1>
+</section>
+
+  <!-- <h1 class="display-4 text-center fw-bold ff">CPU Scheduling Simulator</h1> -->
+  <div class="container-fluid">
+    <div class="col-sm-12">
+      <div class="card border-0">
+        <div class="card-block">
+          <h4 class="card-title  bg-linear text-center custom-css">Processes</h4>
+          <div class="flex-center m-t-40">
+            <table class="table table-hover m-0 p-3 bg-linear" id="table">
+            </table>
+            <div id="show_time_quanta">
+              <h4 class="col-form-label" for="time_quanta">Time Quantum(For Round Robin Algorithm)</h4>
+              <input class="form-control" id="time_quanta" type="number" placeholder="90 (by default)" min="2">
+            </div>
+          </div>
+          <div class="btn-toolbar bg-linear" role="toolbar">
+            <button
+              class="btn bg-primary bg-gradient text-white btn-lg d-flex align-items-center justify-content-between my-4 mx-4 col-md-2"
+              data-bs-toggle="modal" href="#modal_add" role="button" onclick="openAddModal()">Add Process 
+              <span class="material-icons">add</span>
+            </button>
+            <button
+              class="btn bg-secondary bg-gradient text-white btn-lg d-flex align-items-center justify-content-between my-4 mx-4 col-md-2"
+              data-bs-toggle="modal" href="#modal_edit" role="button" onclick="openEditModal()">Edit Process
+               <span class="material-icons">mode_edit</span>
+              </button>
+            <button
+              class="btn bg-danger bg-gradient text-white btn-lg d-flex align-items-center justify-content-between my-4 mx-4 col-md-2"
+              data-bs-toggle="modal" href="#modal_remove" role="button" onclick="openRemoveModal()">Remove Process
+               <span class="material-icons">remove_circle_outline</span>
+              </button>
+            <div class="btn-group col-md-2 my-4 mx-4">
+              <button type="button" class="btn btn-lg bg-gradient d-flex align-items-center justify-content-between"
+                onclick="start()" id="start_btn">Evaluate 
+                <span class="material-icons">play_circle</span>
+              </button>
+              <button type="button"
+                class="btn bg-gradient dropdown-toggle dropdown-toggle-split btn-lg align-items-center justify-content-between"
+                id="drop_btn" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <span class="visually-hidden">Select Algorithms</span>
+              </button>
+              <div class="dropdown-menu shadow border-0">
+                <div class="dropdown-item">
+                  <div class="form-check form-switch">
+                    <input class="form-check-input" type="checkbox" id="fcfs_switch" checked>
+                    <label class="form-check-label" for="fcfs_switch">FCFS</label>
+                  </div>
+                </div>
+                <div class="dropdown-item">
+                  <div class="form-check form-switch">
+                    <input class="form-check-input" type="checkbox" id="sjf_switch" checked>
+                    <label class="form-check-label" for="sjf_switch">SJF</label>
+                  </div>
+                </div>
+                <div class="dropdown-item">
+                  <div class="form-check form-switch">
+                    <input class="form-check-input" type="checkbox" id="srtf_switch" checked>
+                    <label class="form-check-label" for="srtf_switch">SJF(Preemptive)</label>
+                  </div>
+                </div>
+                <div class="dropdown-item">
+                  <div class="form-check form-switch">
+                    <input class="form-check-input" type="checkbox" id="ljf_switch" checked>
+                    <label class="form-check-label" for="ljf_switch">LJF</label>
+                  </div>
+                </div>
+                <div class="dropdown-item">
+                  <div class="form-check form-switch">
+                    <input class="form-check-input" type="checkbox" id="lrtf_switch" checked>
+                    <label class="form-check-label" for="lrtf_switch">LJF(Preemptive)</label>
+                  </div>
+                </div>
+                <div class="dropdown-item">
+                  <div class="form-check form-switch">
+                    <input class="form-check-input" type="checkbox" id="priority_switch" checked>
+                    <label class="form-check-label" for="priority_switch">Priority</label>
+                  </div>
+                </div>
+                <div class="dropdown-item">
+                  <div class="form-check form-switch">
+                    <input class="form-check-input" type="checkbox" id="priority_pre_switch" checked>
+                    <label class="form-check-label" for="priority_pre_switch">Priority(Preemptive)</label>
+                  </div>
+                </div>
+                <div class="dropdown-item">
+                  <div class="form-check form-switch">
+                    <input class="form-check-input" type="checkbox" id="roundrobin_switch" checked>
+                    <label class="form-check-label" for="roundrobin_switch">Round Robin</label>
+                  </div>
+                </div>
+               
+                <div>
+                  <div class="ms-3">
+                    <label><small><em>Click on evaluate to run these algorithms</em></small></label>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <button type="button"
+              class="btn bg-gradient btn-lg d-flex align-items-center justify-content-between my-4 mx-4 col-md-2"
+              id="vis_btn" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Visualise 
+              <span class="material-icons">leaderboard</span>
+            </button>
+            <div class="dropdown-menu shadow">
+              <div class="dropdown-item">
+                <button class="btn btn-outline-dark w-100" onclick="FCFS(true)">FCFS</button>
+              </div>
+              <div class="dropdown-item">
+                <button class="btn btn-outline-dark w-100" onclick="SJFNonPre(true)">SJF</button>
+              </div>
+
+              <div class="dropdown-item">
+                <button class="btn btn-outline-dark w-100" onclick="SJFPre(true)">SJF(Preemptive)</button>
+              </div>
+
+              <div class="dropdown-item">
+                <button class="btn btn-outline-dark w-100" onclick="LJFNonPre(true)">LJF</button>
+              </div>
+
+              <div class="dropdown-item">
+                <button class="btn btn-outline-dark w-100" onclick="LJFPre(true)">LJF(Preemptive)</button>
+              </div>
+
+              <div class="dropdown-item">
+                <button class="btn btn-outline-dark w-100" onclick="priorityNonPre(true)">Priority</button>
+              </div>
+
+              <div class="dropdown-item">
+                <button class="btn btn-outline-dark w-100" onclick="priorityPre(true)">Priority(Preemptive)</button>
+              </div>
+
+              <div class="dropdown-item">
+                <button class="btn btn-outline-dark w-100" onclick="roundRobin(true)">Round Robin</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  </div>
+
+  <!-- Visualization part -->
+  <div class="container-fluid" id="vis" hidden>
+    <div>
+      <div>
+        <h4>Algorithm: <span id="vis_name"></span></h4>
+      </div>
+      <div>
+        <h4>Ready Queue</h4>
+        <div class="flexible">
+          <div class="readyqueue"></div>
+          <div class="d-flex" id="vis_rq">
+            P1
+          </div>
+        </div>
+      </div>
+      <div id="wq" hidden>
+        <h4>Waiting Queue</h4>
+        <div class="" id="vis_wq">
+          P4
+        </div>
+      </div>
+      <div class="d-flex">
+        <h4>CPU</h4>
+        <div class="cpu" id="vis_cpu">
+          P1
+        </div>
+        <div class="p-0 m-auto display-6">
+          <h4>Time: <span id="vis_time" class="bg-warning"></span></h4>
+          <a class="btn btn-outline-danger" href="javascript:void(0)" id="vis_stop">STOP!</a>
+        </div>
+      </div>
+    
+    </div>
+  </div>
+  </div>
+
+  <!-- Gantt Chart -->
+  <div class="container-fluid" id="gantt" hidden>
+    <div class="card border-bottom-0 border-start-0 border-end-0 bg-linear">
+      <h4>Gantt Charts</h4>
+      <div>
+        <h5>Gantt Chart for FCFS <button class="btn p-0" onclick="openGantt(gantt_FCFS)"><svg
+              xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+              <path fill="none" d="M0 0h24v24H0V0z" />
+              <path
+                d="M12 4c4.41 0 8 3.59 8 8s-3.59 8-8 8-8-3.59-8-8 3.59-8 8-8m0-2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 13l-4-4h8z" />
+              </svg></button></h5>
+        <div class="row" id="gantt_FCFS" hidden></div>
+      </div>
+      <div>
+        <h5>Gantt Chart for SJF non pre <button class="btn p-0" onclick="openGantt(gantt_SJFNonPre)"><svg
+              xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+              <path fill="none" d="M0 0h24v24H0V0z" />
+              <path
+                d="M12 4c4.41 0 8 3.59 8 8s-3.59 8-8 8-8-3.59-8-8 3.59-8 8-8m0-2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 13l-4-4h8z" />
+              </svg></button></h5>
+        <div class="row" id="gantt_SJFNonPre" hidden></div>
+      </div>
+      <div>
+        <h5>Gantt Chart for SJF pre <button class="btn p-0" onclick="openGantt(gantt_SJFPre)"><svg
+              xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+              <path fill="none" d="M0 0h24v24H0V0z" />
+              <path
+                d="M12 4c4.41 0 8 3.59 8 8s-3.59 8-8 8-8-3.59-8-8 3.59-8 8-8m0-2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 13l-4-4h8z" />
+              </svg></button></h5>
+        <div class="row" id="gantt_SJFPre" hidden></div>
+      </div>
+      <div>
+        <h5>Gantt Chart for LJF non pre <button class="btn p-0" onclick="openGantt(gantt_LJFNonPre)"><svg
+              xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+              <path fill="none" d="M0 0h24v24H0V0z" />
+              <path
+                d="M12 4c4.41 0 8 3.59 8 8s-3.59 8-8 8-8-3.59-8-8 3.59-8 8-8m0-2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 13l-4-4h8z" />
+              </svg></button></h5>
+        <div class="row" id="gantt_LJFNonPre" hidden></div>
+      </div>
+      <div>
+        <h5>Gantt Chart for LJF pre <button class="btn p-0" onclick="openGantt(gantt_LJFPre)"><svg
+              xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+              <path fill="none" d="M0 0h24v24H0V0z" />
+              <path
+                d="M12 4c4.41 0 8 3.59 8 8s-3.59 8-8 8-8-3.59-8-8 3.59-8 8-8m0-2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 13l-4-4h8z" />
+              </svg></button></h5>
+        <div class="row" id="gantt_LJFPre" hidden></div>
+      </div>
+      <div>
+        <h5>Gantt Chart for Priority non pre <button class="btn p-0" onclick="openGantt(gantt_PriorityNonPre)"><svg
+              xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+              <path fill="none" d="M0 0h24v24H0V0z" />
+              <path
+                d="M12 4c4.41 0 8 3.59 8 8s-3.59 8-8 8-8-3.59-8-8 3.59-8 8-8m0-2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 13l-4-4h8z" />
+              </svg></button></h5>
+        <div class="row" id="gantt_PriorityNonPre" hidden></div>
+      </div>
+      <div>
+        <h5>Gantt Chart for Priority pre <button class="btn p-0" onclick="openGantt(gantt_PriorityPre)"><svg
+              xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+              <path fill="none" d="M0 0h24v24H0V0z" />
+              <path
+                d="M12 4c4.41 0 8 3.59 8 8s-3.59 8-8 8-8-3.59-8-8 3.59-8 8-8m0-2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 13l-4-4h8z" />
+              </svg></button></h5>
+        <div class="row" id="gantt_PriorityPre" hidden></div>
+      </div>
+      <div>
+        <h5>Gantt Chart for Round Robin <button class="btn p-0" onclick="openGantt(gantt_RoundRobin)"><svg
+              xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+              <path fill="none" d="M0 0h24v24H0V0z" />
+              <path
+                d="M12 4c4.41 0 8 3.59 8 8s-3.59 8-8 8-8-3.59-8-8 3.59-8 8-8m0-2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 13l-4-4h8z" />
+              </svg></button></h5>
+        <div class="row" id="gantt_RoundRobin" hidden></div>
+      </div>
+      
+    </div>
+  </div>
+  <!-- Result Table -->
+  <div class="container-fluid" id="result" hidden>
+    <div class="col-sm-12">
+      <div class="card border-bottom-0 border-start-0 border-end-0 bg-linear">
+        <div class="card-block" id="result_div">
+          <h4 class="card-title">Results</h4>
+          <div class="flex-center m-t-40">
+            <table class="table table-hover" id="result_table">
+            </table>
+          </div>
+        </div>
+        <!-- Final Result -->
+        <div>
+          <div class="col-sm-12">
+            <h5>The best algorithms for these processes is <span role="img" data-toggle="tooltip"
+                data-placement="bottom"
+                title="Based on CPU utilization, Throughput, Turnaround time, Waiting time, Response time"
+                style="opacity: 0.6;"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                  viewBox="0 0 32 32">
+                  <path
+                    d="M16 0C7.164 0 0 7.164 0 16s7.164 16 16 16 16-7.164 16-16S24.836 0 16 0zm-2 14a2 2 0 0 1 4 0v10a2 2 0 0 1-4 0V14zm2-3.968a2 2 0 1 1 .001-4.001A2 2 0 0 1 16 10.032z" />
+                </svg></span></h5>
+            <ul id="final_result"></ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Modal Structure -->
+  <div id="modal_add" class="modal fade" tabindex="-1" aria-labelledby="modal_add" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title">Add a process</h4>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form class="col s12">
+            <div>
+              <div class="mb-3">
+                <label for="modal_process_id" class="col-form-label">Id</label>
+                <input disabled placeholder="Id" class="form-control" type="number" id="modal_process_id">
+
+              </div>
+              <div class="mb-3">
+                <label for="modal_burst_time" class="col-form-label">Burst Time</label>
+                <input id="modal_burst_time" class="form-control" type="number" min="0" required>
+                <div class="text-danger" id="error_bt" hidden>
+                  Please enter value greater than 0
+                </div>
+
+              </div>
+              <div class="mb-3">
+                <label for="modal_arrival_time" class="col-form-label">Arrival Time</label>
+                <input id="modal_arrival_time" class="form-control" type="number" min="0" required placeholder="0">
+                <div class="text-danger" id="error_at" hidden>
+                  Please enter value greater than or equal to 0
+                </div>
+
+              </div>
+              <div class="mb-3">
+                <label for="modal_priority" class="col-form-label">Priority</label>
+                <input id="modal_priority" class="form-control" type="number" min="0" required placeholder="0">
+                <div class="text-danger" id="error_pt" hidden>
+                  Please enter value greater than or equal to 0
+                </div>
+
+              </div>
+            </div>
+
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn bg-primary bg-gradient text-white" onclick="addProcess();">ADD</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <div id="modal_edit" class="modal fade" tabindex="-1" aria-labelledby="modal_edit" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title">Edit Process</h4>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <div class="mb-3">
+            <select id="modal_edit_select" class="form-select form-select-lg mb-3" aria-label=".form-select-lg example">
+              <option value="" disabled selected>Choose Process Id</option>
+
+            </select>
+          </div>
+          <div class="mb-3">
+            <label class="col-form-label" for="modal_edit_burst_time">Burst Time</label>
+            <input class="form-control" id="modal_edit_burst_time" type="number" min="0" class="validate" required>
+            <div class="text-danger" id="error_edit_bt" hidden>
+              Please enter value greater than 0
+            </div>
+          </div>
+          <div class="mb-3">
+            <label class="col-form-label" for="modal_edit_arrival_time">Arrival Time</label>
+            <input class="form-control" id="modal_edit_arrival_time" type="number" min="0" class="validate" required>
+            <div class="text-danger" id="error_edit_at" hidden>
+              Please enter value greater than or equal to 0
+            </div>
+          </div>
+          <div class="mb-3">
+            <label class="col-form-label" for="modal_edit_priority">Priority</label>
+            <input class="form-control" id="modal_edit_priority" type="number" min="0" class="validate" required>
+            <div class="text-danger" id="error_edit_pt" hidden>
+              Please enter value greater than or equal to 0
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn bg-secondary bg-gradient text-white" onclick="editProcess()">Proceed</button>
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="modal_remove" class="modal fade" tabindex="-1" aria-labelledby="modal_remove" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title">Remove Multiple Processes</h4>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <div class="mb-3">
+            <span>Select one or more processes to remove</span>
+            <select multiple id="modal_remove_select" class="form-select form-select-lg mb-3" multiple
+              aria-label="multiple select example">
+              <option value="" disabled>Select Process Id</option>
+            </select>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-danger text-white" onclick="removeProcess()"
+            data-bs-dismiss="modal">Remove</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+<hr style="height: 1px; background-color: #000; margin: 25px 25px 0 25px;">
+  
+  <!-- Footer Section  -->
+  <section class="footer">
+    <div class="icons">
+        <a href="#"><i class="fab fa-instagram"></i></a>
+        <a href="#"><i class="fab fa-github"></i></a>
+        <a href="#"><i class="fab fa-linkedin"></i></a>
+    </div>
+
+    <p>Made With <i class="far fa-heart"></i> by AEC-IT</p>
+    <p><i class="fa fa-copyright"></i> copyright 2024 || All rights reserved</p>
+</section>
+
+
+<!-- JavaScript :-  -->
+<script>
+    var navLinks = document.getElementById("navLinks");
+    function showMenu() {
+        navLinks.style.right = "0";
+    }
+
+    function hideMenu() {
+        navLinks.style.right = "-200px";
+    }
+
+    function gotoDocs() {
+        location.href = "docs.html";
+    }
+</script>
+  <script async>
+    $(function () {
+      displayTable();
+    });
+  </script>
+</body>
+
+</html>
