@@ -41,7 +41,7 @@ Follow these instructions to get the project up and running on your local machin
 1. Clone the repository:
 
     ```bash
-    https://github.com/gajendra-ingle/Frontend-Final-year-project.git
+    https://github.com/nayandeshmane/CPU-Scheduling-Simulator.git
     
 2. Open `index.html` in your browser.
 
